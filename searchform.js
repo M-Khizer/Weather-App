@@ -35,7 +35,6 @@ function Searchform({cityDetails,getWeatherDetails,cityname,setCity,setSearch}) 
                 <p>{data.WeatherText}</p>
             ))
         } */}
-      <DisplayWeather cityDet={cityDet} weatherDetails={weatherDetails} cityname={cityname}/>
   </div>
   )
 }
