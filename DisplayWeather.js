@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
-function DisplayWeather({cityData}) {
-  const [key,setKey]=useState()
-
-  console.log(cityData)
+function DisplayWeather({cityData,weatherData,setId}) {
+  // const [key,setKey]=useState()
+  // const [loading,setLoading]=useState(true)
+  // setKey(cityData)
+  console.log(cityData.Key)
+  // setId(cityData.Key)
+  console.log(weatherData)
   // setKey(cityData)
   // console.log(key)
 //  console.log(cityData.Key)
@@ -12,11 +15,8 @@ function DisplayWeather({cityData}) {
 //  })
   return(
   <div>
-    {/* {
-     cityData.map(city=> <li>{city}</li>)
-
-    } */}
-    {/* <h1>{cityData.Key}</h1> */}
+    <p>{cityData.EnglishName}</p>
+   <p>{weatherData.WeatherText}</p>
   </div>
   )
 }
