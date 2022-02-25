@@ -1,85 +1,97 @@
 import { useState,useEffect } from 'react';
 import './App.css';
-import DisplayWeather from './DisplayWeather';
+import DisplayWeather from './displayweather';
 import Searchform from './searchform';
-import searchform from './searchform';
+// import searchform from './searchform';
 
 function App() {
-  const key='gMPX1smQKRS18O60GFjexssclAiaopPT'
+  const key='BDlk68JVkVkyp0j9GxAQyG8sviskZ2VZ'
   const [cityname,setCity]=useState('karachi');
   const [cityData,setCityData]=useState();
   const [id,setId]=useState('');
   const [search,setSearch]=useState('karachi')
   const [weatherData,setWeatherData]=useState();
-  // setId(cityData.Key)
-  // console.log(weatherData)
+  
+  // setId(cityData?.Key)
+  // console.log(id)
+  // 261158
+
   useEffect(() => {
     
     const baseURL="http://dataservice.accuweather.com/currentconditions/v1/"
     const query=`261158?apikey=${key}`
+    const controller= new AbortController()
+    const signal=controller.signal
 
-    const weatherDetails=async()=>{
+    const weatherDetails= async ()=>{
       
-      const res= await fetch(baseURL + query).catch(e=>console.log(e))
+      const res= await fetch(baseURL+query,{
+        signal:signal
+      }).catch(e=>{
+        if(e.name === 'AbortError'){
+          console.log('Abort success')
+        }
+        else{
+          console.log(e)
+        }
+      })
       const data = await res.json()
-
       setWeatherData(data[0])
-    
+      // console.log(weatherData)
+
+      return ()=>{
+        controller.abort()
+      }
     }
     weatherDetails()
   },[]);
 
   useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(position=>{
-    //   console.log(position.coords.latitude)
-    //   console.log(position.coords.longitude)
-
-    // })
+  
     const baseURL="http://dataservice.accuweather.com/locations/v1/cities/search"
 
     const query=`?apikey=${key}&q=${search}`
 
+    const controller= new AbortController()
+    const signal=controller.signal
 
     const CityDetails= async ()=>{
     
-      const fetchData=await fetch(baseURL+query).catch(err=>console.log(err));
+      const fetchData=await fetch(baseURL+query,{
+        signal:signal
+      }).catch(e=>{
+        
+        if(e.name === 'AbortError'){
+          console.log('Abort success')
+        }
+        else{
+          console.log(e)
+        }
+      });
       const result= await fetchData.json()
-      // setCityData([ ])
+      console.log(fetchData)
+      console.log(result)
+
       setCityData(result[0])
 
-      // console.log(cityData)
-
-      // console.log(result[0])
+      return ()=>{
+        controller.abort()
+      }
     }
 
     CityDetails()
-    
-    // console.log(cityData)
-    // setKey(cityData.Key)
-    // console.log(keys)  
-    
 
   },[search]);
-  // const getWeatherDetails= async (id)=>{
-    
-  // }
 
-  //   const cityDetails= async (city)=>{
-
-   
-  //   }
-  // console.log(cityData.Key)
-
-    return(
+  return(
       <>
         <Searchform cityname={cityname} setCity={setCity} setSearch={setSearch}/>
 
       {
-        (typeof(cityData) !== 'undefined') ?
-          <DisplayWeather cityData={cityData} weatherData={weatherData} setId={setId}/>
-        : console.log('Undefined')
+        typeof(cityData) !== "undefined" ? (
+        <DisplayWeather cityData={cityData} weatherData={weatherData} setId={setId}/>)
+        : <p>Loading...</p>
       }
-        {/* {cityData.map(data=>)} */}
       </>
     )
 
