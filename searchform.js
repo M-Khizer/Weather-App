@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import DisplayWeather from './DisplayWeather';
+// import DisplayWeather from './DisplayWeather';
 
 function Searchform({cityDetails,getWeatherDetails,cityname,setCity,setSearch}) {
     
-    const [cityDet,setDet]=useState([]);
-    const [weatherDetails,setWeather]=useState([]);
-    
-    // useEffect(() => {
-        
-        
-    //     };
-    
-     
-    // }, [cityname]);
-    
     const handleSubmit= async (e)=>{
         e.preventDefault()
+        setSearch(cityname)
         // console.log(cityname)
-        // cityDet = await cityDetails(cityname)
-        // weatherDetails= await getWeatherDetails(cityDet.Key)
-        // console.log(cityDet)
-        // console.log(weatherDetails)
     }
 
   return(
@@ -28,7 +14,7 @@ function Searchform({cityDetails,getWeatherDetails,cityname,setCity,setSearch}) 
       <form onSubmit={handleSubmit}>
       <label>City Name</label>
       <input type="text" placeholder='eg: karachi' onChange={e=>{setCity(e.target.value)}} value={cityname}/>
-      <button onClick={()=>{setSearch(cityname)}}>Enter</button>
+      <button>Enter</button>
       </form>
         {/* {
             weatherDetails.map(data=>(
