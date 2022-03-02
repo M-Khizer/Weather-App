@@ -1,24 +1,32 @@
 import React from 'react';
-
 // import DisplayWeather from './DisplayWeather';
 
-function Searchform({cityname,setCity,setSearch}) {
+function Searchform({cityname,setCity,setSearch,Form,Container,Col}) {
     
     const handleSubmit= async (e)=>{
         e.preventDefault()
         
         setSearch(cityname)
-        // console.log(cityname)
+        setCity('')
     }
 
   return(
   <div>
-      <form onSubmit={handleSubmit}>
-      <label>City Name</label>
-      <input type="text" placeholder='eg: karachi' onChange={e=>{setCity(e.target.value)}}
-       value={cityname}/>
-      {/* <button>Enter</button> */}
-      </form>
+      <Container style={{width:'80%'}} className='form'>
+        <Col >
+            <Form onSubmit={handleSubmit}>
+                <Form.Group controlId='CityName' >
+                    <Form.Control className='rounded-pill' autoComplete='off' type='text' 
+                        placeholder='Enter the city name here'
+                        onChange={e=>{setCity(e.target.value)}}
+                        value={cityname}
+                    >
+                    </Form.Control>
+
+                </Form.Group>
+            </Form>
+        </Col>
+      </Container>
   </div>
   )
 }
