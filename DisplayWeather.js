@@ -1,12 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import clear from "./Weather Icons/clear.svg";
-import cloud from "./Weather Icons/cloud.svg";
-import snow from "./Weather Icons/snow.svg";
-import haze from "./Weather Icons/haze.svg";
-import storm from "./Weather Icons/storm.svg";
-import rain from "./Weather Icons/rain.svg";
+import { Col, Container } from 'react-bootstrap';
+import sun from './Weather Icons/sun.png'
+import moon from './Weather Icons/moon.png'
 
-function DisplayWeather({cityData,keys,setId,id}) {
+function DisplayWeather({cityData,keys,setId,id,Card}) {
 
   const [weatherData,setWeatherData]=useState();
 
@@ -49,14 +46,31 @@ function DisplayWeather({cityData,keys,setId,id}) {
 
   return(
   <div>
-    
-    
-    <p>{cityData?.Country.EnglishName}</p>
-    <p>{cityData?.Key}</p>
+    <Container style={{width:'70%'}} className='display'>
+      <Col>
+        <Card className="text-center card-display" >
 
-   <p>{weatherData?.Temperature.Metric.Value} &deg;c</p>
-   <p>{weatherData?.WeatherText}</p>
+          <Card.Body className='card-body'>
 
+          <div className='card-content'>           
+            <Card.Title className="country rounded-pill">{cityData?.Country.EnglishName}</Card.Title>
+            <Card.Title className='city-contain'><span className="city">{cityData?.EnglishName}</span>
+              {/* <sup className="country rounded-pill">{cityData?.Country.ID}</sup> */}
+              </Card.Title>
+            <Card.Title className='temp-contain'><span className="temp">{Math.ceil(weatherData?.Temperature.Metric.Value)}</span>
+               <sup className='deg'>&deg;C</sup></Card.Title>
+            <Card.Title className='text-contain'><div className="text">{weatherData?.WeatherText}</div></Card.Title>
+            <Card.Title className="sun-moon">{weatherData?.IsDayTime ? <img src={sun}/> : 
+              < img src={moon}/>
+            }</Card.Title>
+          
+          </div>
+
+          </Card.Body>
+        </Card>
+      </Col>
+
+    </Container>
   </div>
   )
 }
